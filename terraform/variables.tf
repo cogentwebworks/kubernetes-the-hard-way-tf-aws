@@ -1,19 +1,19 @@
 variable "aws_region" {
-  default = "eu-central-1"
+  default = "ap-southeast-1"
 }
 variable "aws_profile" {
-  default = "kube-the-hard-way"
+  default = "default"
 }
 variable "ami_type" {
-  # Ubuntu 16.04 ami
-  default = "ami-0cc0a36f626a4fdf5"
+  # Ubuntu 2020.04 ami
+  default = "ami-0b8cf0f359b1335e1"
 }
 variable "instance_type" {
-  default = "t2.micro"
+  default = "t3a.medium	"
 }
 variable "key_name" {
-  default = "kube_the_hard_way"
+  default = "kubics-master"
 }
 variable "public_key_path" {
-  default = "~/.ssh/kube_the_hard_way.pub"
+  default = "~/.ssh/id_rsa.pub"
 }

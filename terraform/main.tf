@@ -1,9 +1,9 @@
 terraform {
-  required_version = "0.12.19"
+
 }
 
 provider "aws" {
-  version = "2.46.0"
+
   region  = var.aws_region
   profile = var.aws_profile
 }

@@ -21,7 +21,7 @@ The commands in this lab must be run on each worker instance: worker-0, worker-1
 
 ```
 {
-PUBLIC_WORKER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
+PUBLIC_WORKER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
 
 for external_ip in $PUBLIC_WORKER_IPS; do
   echo ssh ubuntu@$external_ip
@@ -38,19 +38,19 @@ First create the inventory file by running:
 ```
 {
 PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress")
 
 PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PrivateIpAddress")
 
 PUBLIC_DNS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicDnsName")
 
 PUBLIC_WORKER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
 
 PUBLIC_CONTROLLER_IPS=($(echo $PUBLIC_CONTROLLER_IPS_RAW | jq -r ".[]"))
@@ -149,9 +149,9 @@ wget -q --show-progress --https-only --timestamping \
   https://github.com/opencontainers/runc/releases/download/v1.0.0-rc5/runc.amd64 \
   https://github.com/containernetworking/plugins/releases/download/v0.8.2/cni-plugins-linux-amd64-v0.8.2.tgz \
   https://github.com/containerd/containerd/releases/download/v1.3.2/containerd-1.3.2.linux-amd64.tar.gz \
-  https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kubectl \
-  https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kube-proxy \
-  https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kubelet
+  https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubectl \
+  https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-proxy \
+  https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubelet
 ```
 
 Create the installation directories:
@@ -201,9 +201,9 @@ ANSIBLE:
     with_items:
       - "https://storage.googleapis.com/kubernetes-the-hard-way/runsc"
       - "https://github.com/opencontainers/runc/releases/download/v1.0.0-rc5/runc.amd64"
-      - "https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kubectl"
-      - "https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kube-proxy"
-      - "https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kubelet"
+      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubectl"
+      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-proxy"
+      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubelet"
     become: yes
 
   - name: Rename runc.amd64 to runc

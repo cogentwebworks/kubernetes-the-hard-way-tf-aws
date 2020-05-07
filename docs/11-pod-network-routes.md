@@ -12,7 +12,7 @@ In this section you will gather the information required to create routes in the
 
 In production workloads this functionality will be provided by CNI plugins like flannel, calico, amazon-vpc-cni-k8s. Doing this by hand makes it easier to understand what those plugins do behind the scenes.
 
-For this particular variant of "Kubernetes The Hard Way" this is already handled by Terraform when creating the infrastructure.
+For this particular variant of "Kubics" this is already handled by Terraform when creating the infrastructure.
 
 Particularly by this snippet:
 

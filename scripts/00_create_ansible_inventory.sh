@@ -1,19 +1,19 @@
 #!/bin/bash
 
 PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress")
 
 PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PrivateIpAddress")
 
 PRIVATE_DNS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PrivateDnsName")
 
 PUBLIC_WORKER_IPS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]")
 
 PUBLIC_CONTROLLER_IPS=$(echo $PUBLIC_CONTROLLER_IPS_RAW | jq -r ".[]")

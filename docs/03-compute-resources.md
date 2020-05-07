@@ -20,7 +20,7 @@ We will deploy the following infrastructure:
 You can use the following variable.tf file
 ```
 variable "aws_region" {
-  default = "eu-central-1"
+  default = "ap-southeast-1"
 }
 variable "aws_profile" {
   default = "kube-the-hard-way"
@@ -36,7 +36,7 @@ variable "key_name" {
   default = "kube_the_hard_way"
 }
 variable "public_key_path" {
-  default = "~/.ssh/kube_the_hard_way.pub"
+  default = "~/.ssh/id_rsa.pub"
 }
 ```
 
@@ -185,7 +185,7 @@ resource "aws_route_table_association" "kube_public_assoc" {
 First we create the key
 
 ```
-ssh-keygen -t rsa -f ~/.ssh/kube_the_hard_way
+ssh-keygen -t rsa -f ~/.ssh/id_rsa
 ```
 
 ```

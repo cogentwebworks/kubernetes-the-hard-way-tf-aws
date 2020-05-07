@@ -65,11 +65,11 @@ cat > ca-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "Kubernetes",
-      "OU": "CA",
-      "ST": "Oregon"
+      "OU": "BK",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -105,11 +105,11 @@ cat > admin-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:masters",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -140,7 +140,7 @@ You have a script file you can run under [/scripts/04_generate_worker_cets.sh](.
 
 ```
 {
-AWS_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1)
+AWS_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 INSTANCE_IDS=($(echo $AWS_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId')) 
 
 for instance in $INSTANCE_IDS; do
@@ -159,11 +159,11 @@ cat > ${PRIVATE_DNS}-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:nodes",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -196,11 +196,11 @@ cat > kube-controller-manager-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:kube-controller-manager",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -238,11 +238,11 @@ cat > kube-proxy-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:node-proxier",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -278,11 +278,11 @@ cat > kube-scheduler-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:kube-scheduler",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -316,12 +316,12 @@ Generate the Kubernetes API Server certificate and private key:
 {
 
 AWS_MASTER_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1)
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 MASTER_PRIVATE_IP_LIST=$(echo $AWS_MASTER_RESULT | jq -r '.Reservations | map(.Instances[].PrivateIpAddress) | join(",")')
 MASTER_PRIVATE_DNS_LIST=$(echo $AWS_MASTER_RESULT | jq -r '.Reservations | map(.Instances[].PrivateDnsName) | join(",")')
-MASTER_PRIVATE_HOSTNAMES=$(echo $MASTER_PRIVATE_DNS_LIST | sed 's/.eu-central-1\.compute\.internal/''/g')
+MASTER_PRIVATE_HOSTNAMES=$(echo $MASTER_PRIVATE_DNS_LIST | sed 's/.ap-southeast-1\.compute\.internal/''/g')
 
-KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers --names "kube-loadbalancer" --output text --query 'LoadBalancers[].DNSName' --profile=kube-the-hard-way --region=eu-central-1)
+KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers --names "kube-loadbalancer" --output text --query 'LoadBalancers[].DNSName' --profile=default --region=ap-southeast-1)
 
 
 CERT_HOSTNAME=10.32.0.1,$MASTER_PRIVATE_IP_LIST,\
@@ -338,11 +338,11 @@ cat > kubernetes-csr.json << EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "Kubernetes",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -378,11 +378,11 @@ cat > service-account-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "Kubernetes",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -406,7 +406,7 @@ You can also use the provided [script](../scripts/04_distribute_certificate_file
 
 ```
 {
-  AWS_WORKER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1)
+  AWS_WORKER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 INSTANCE_IDS=($(echo $AWS_WORKER_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId'))
 
 for instance in $INSTANCE_IDS; do
@@ -415,7 +415,7 @@ PUBLIC_IP=$(echo $AWS_WORKER_CLI_RESULT | jq -r '.Reservations[].Instances[] | s
 PRIVATE_IP=$(echo $AWS_WORKER_CLI_RESULT | jq -r '.Reservations[].Instances[] | select(.InstanceId=="'${instance}'") | .PrivateIpAddress') 
 PRIVATE_DNS=$(echo $AWS_WORKER_CLI_RESULT | jq -r '.Reservations[].Instances[] | select(.InstanceId=="'${instance}'") | .PrivateDnsName' | cut -d'.' -f1) 
 
-scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/kube_the_hard_way ca.pem $PRIVATE_DNS-key.pem $PRIVATE_DNS.pem ubuntu@$PUBLIC_IP:~/
+scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ca.pem $PRIVATE_DNS-key.pem $PRIVATE_DNS.pem ubuntu@$PUBLIC_IP:~/
 
 done
 }
@@ -426,14 +426,14 @@ Copy the appropriate certificates and private keys to each controller instance:
 ```
 {
 
-AWS_CONTROLLER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1)
+AWS_CONTROLLER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 INSTANCE_IDS=($(echo $AWS_CONTROLLER_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId'))
 
 for instance in $INSTANCE_IDS; do
 
 PUBLIC_IP=$(echo $AWS_CONTROLLER_CLI_RESULT | jq -r '.Reservations[].Instances[] | select(.InstanceId=="'${instance}'") | .PublicIpAddress') 
 
-scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/kube_the_hard_way ca.pem ca-key.pem kubernetes-key.pem kubernetes.pem \
+scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ca.pem ca-key.pem kubernetes-key.pem kubernetes.pem \
     service-account-key.pem service-account.pem ubuntu@$PUBLIC_IP:~/
 
 done

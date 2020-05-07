@@ -20,7 +20,7 @@ Generate a kubeconfig file suitable for authenticating as the `admin` user:
 ```
 {
 KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers --names "kube-loadbalancer"\
- --output text --query 'LoadBalancers[].DNSName' --profile=kube-the-hard-way --region=eu-central-1)
+ --output text --query 'LoadBalancers[].DNSName' --profile=default --region=ap-southeast-1)
 
 kubectl config set-cluster kubernetes-the-hard-way \
   --certificate-authority=ca.pem \
@@ -71,9 +71,9 @@ kubectl get nodes
 
 ```
 NAME                                                   STATUS   ROLES    AGE   VERSION
-ec2-18-185-53-159.eu-central-1.compute.amazonaws.com   Ready    <none>   21m   v1.17.2
-ec2-35-158-124-59.eu-central-1.compute.amazonaws.com   Ready    <none>   21m   v1.17.2
-ec2-52-58-118-177.eu-central-1.compute.amazonaws.com   Ready    <none>   27m   v1.17.2
+ec2-18-185-53-159.ap-southeast-1.compute.amazonaws.com   Ready    <none>   21m   v1.17.2
+ec2-35-158-124-59.ap-southeast-1.compute.amazonaws.com   Ready    <none>   21m   v1.17.2
+ec2-52-58-118-177.ap-southeast-1.compute.amazonaws.com   Ready    <none>   27m   v1.17.2
 ```
 
 Next: [Provisioning Pod Network Routes](11-pod-network-routes.md)

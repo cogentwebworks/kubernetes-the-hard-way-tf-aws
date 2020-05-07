@@ -3,7 +3,7 @@
 echo "-- 10. CONFIGURE KUBECTL"
 
 KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers --names "kube-loadbalancer"\
- --output text --query 'LoadBalancers[].DNSName' --profile=kube-the-hard-way --region=eu-central-1)
+ --output text --query 'LoadBalancers[].DNSName' --profile=default --region=ap-southeast-1)
 
 kubectl config set-cluster kubernetes-the-hard-way \
   --certificate-authority=ca.pem \

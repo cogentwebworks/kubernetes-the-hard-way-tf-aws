@@ -10,13 +10,13 @@ aws_login:
 ssh_agent:
 	@echo Configure ssh agent and add key
 	eval 'ssh-agent -s'
-	ssh-add ~/.ssh/kube_the_hard_way
+	ssh-add ~/.ssh/id_rsa
 
 init:
 	@echo Initial commands to start working: Get temp AWS credentials and add key to the ssh agent.
 	saml2aws login --force --profile=kube-the-hard-way
 	eval 'ssh-agent -s'
-	ssh-add ~/.ssh/kube_the_hard_way
+	ssh-add ~/.ssh/id_rsa
 
 create_infra:
 	@echo Create the infrastructure from scratch
@@ -33,7 +33,7 @@ all:
 	@echo Do all
 	saml2aws login --profile=kube-the-hard-way
 	eval 'ssh-agent -s'
-	ssh-add ~/.ssh/kube_the_hard_way
+	ssh-add ~/.ssh/id_rsa
 	mkdir -p tmp
 	cp ansible.cfg tmp/ansible.cfg
 	cd tmp && ./../scripts/04_generate_client_certificates.sh\

@@ -20,7 +20,7 @@ The commands in this lab must be run on each controller instance: `controller-0`
 
 ```
 {
-PUBLIC_CONTROLLER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
+PUBLIC_CONTROLLER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
 
 for external_ip in $PUBLIC_CONTROLLER_IPS; do
   echo ssh -i kubernetes.id_rsa ubuntu@$external_ip
@@ -37,19 +37,19 @@ First create the inventory file in case you don't have it by running:
 ```
 {
 PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress")
 
 PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PrivateIpAddress")
 
 PRIVATE_DNS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PrivateDnsName")
 
 PUBLIC_WORKER_IPS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
- "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query\
+ "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]")
 
 PUBLIC_CONTROLLER_IPS=($(echo $PUBLIC_CONTROLLER_IPS_RAW | jq -r ".[]"))
@@ -135,10 +135,10 @@ SSH:
 
 ```
 wget -q --show-progress --https-only --timestamping \
-  "https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kube-apiserver" \
-  "https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kube-controller-manager" \
-  "https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kube-scheduler" \
-  "https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kubectl"
+  "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-apiserver" \
+  "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-controller-manager" \
+  "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-scheduler" \
+  "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubectl"
 ```
 
 Install the Kubernetes binaries:
@@ -153,28 +153,28 @@ ANSIBLE:
 ```
     - name: Download kube-apiserver
       get_url:
-        url: https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kube-apiserver
+        url: https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-apiserver
         dest: /usr/local/bin/
         mode: a+x
       become: yes
 
     - name: Download kube-controller-manager
       get_url:
-        url: https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kube-controller-manager
+        url: https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-controller-manager
         dest: /usr/local/bin/
         mode: a+x
       become: yes
     
     - name: Download kube-scheduler
       get_url:
-        url: https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kube-scheduler
+        url: https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-scheduler
         dest: /usr/local/bin/
         mode: a+x
       become: yes
 
     - name: Download kubectl
       get_url:
-        url: https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/linux/amd64/kubectl
+        url: https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubectl
         dest: /usr/local/bin/
         mode: a+x
       become: yes
@@ -215,9 +215,9 @@ INTERNAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 And get the ECTD_CLUSTER_SETTING from the snippet at the start of the file running this on your local machine:
 ```
 {
-PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query "Reservations[].Instances[].PublicIpAddress")
+PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress")
 
-PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1 --query "Reservations[].Instances[].PrivateIpAddress")
+PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PrivateIpAddress")
 
 ETCD_CLUSTER_SETTING=""
 declare -i i=0
@@ -510,7 +510,7 @@ Retrieve the `kubernetes-the-hard-way` Load Balancer address:
 
 ```
 KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers --names "kube-loadbalancer"\
- --output text --query 'LoadBalancers[].DNSName' --profile=kube-the-hard-way --region=eu-central-1)
+ --output text --query 'LoadBalancers[].DNSName' --profile=default --region=ap-southeast-1)
 ```
 
 Make a HTTP request for the Kubernetes version info:

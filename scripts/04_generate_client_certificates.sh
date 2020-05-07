@@ -29,11 +29,11 @@ cat > ca-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "Kubernetes",
-      "OU": "CA",
-      "ST": "Oregon"
+      "OU": "BK",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -52,11 +52,11 @@ cat > admin-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:masters",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -71,7 +71,7 @@ cfssl gencert \
 
 # Worker Certificates
 
-AWS_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=kube-the-hard-way --region=eu-central-1)
+AWS_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 INSTANCE_IDS=$(echo $AWS_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId') 
 
 for instance in $INSTANCE_IDS; do
@@ -90,11 +90,11 @@ cat > ${PRIVATE_DNS}-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:nodes",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -121,11 +121,11 @@ cat > kube-controller-manager-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:kube-controller-manager",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -149,11 +149,11 @@ cat > kube-proxy-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:node-proxier",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }
@@ -177,11 +177,11 @@ cat > kube-scheduler-csr.json <<EOF
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "TH",
+      "L": "Bangkok",
       "O": "system:kube-scheduler",
-      "OU": "Kubernetes The Hard Way",
-      "ST": "Oregon"
+      "OU": "Kubics",
+      "ST": "Bangkok"
     }
   ]
 }

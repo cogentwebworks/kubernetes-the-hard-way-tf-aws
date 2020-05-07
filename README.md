@@ -1,18 +1,18 @@
 # About
 
-This guide was created following the awesome [Kubernetes The Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way) by Kelsey Hightower. It's a lot of copy pasting, so all credit to him.
+This guide was created following the awesome [Kubics](https://github.com/kelseyhightower/kubernetes-the-hard-way) by Kelsey Hightower. It's a lot of copy pasting, so all credit to him.
 
-I consulted [Prabhat Sharma](https://github.com/prabhatsharma) adaption of [Kubernetes The Hard Way (AWS)](https://github.com/prabhatsharma/kubernetes-the-hard-way-aws)
+I consulted [Prabhat Sharma](https://github.com/prabhatsharma) adaption of [Kubics (AWS)](https://github.com/prabhatsharma/kubernetes-the-hard-way-aws)
 
 This guide also makes use of Terraform to automatically deploy the infrastructure and Ansible to provision it.
 
 There are some shell and asible scripts provided to fully automate the whole process.
 
-# Kubernetes The Hard Way
+# Kubics
 
-This tutorial walks you through setting up Kubernetes the hard way. This guide is not for people looking for a fully automated command to bring up a Kubernetes cluster. If that's you then check out [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine), [AWS Elastic Container Service for Kubernetes](https://aws.amazon.com/eks/) or the [Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/).
+This tutorial walks you through setting up Kubics. This guide is not for people looking for a fully automated command to bring up a Kubernetes cluster. If that's you then check out [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine), [AWS Elastic Container Service for Kubernetes](https://aws.amazon.com/eks/) or the [Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/).
 
-Kubernetes The Hard Way is optimized for learning, which means taking the long route to ensure you understand each task required to bootstrap a Kubernetes cluster.
+Kubics is optimized for learning, which means taking the long route to ensure you understand each task required to bootstrap a Kubernetes cluster.
 
 > The results of this tutorial should not be viewed as production ready, and may receive limited support from the community, but don't let that stop you from learning!
 
@@ -22,7 +22,7 @@ The target audience for this tutorial is someone planning to support a productio
 
 ## Cluster Details
 
-Kubernetes The Hard Way guides you through bootstrapping a highly available Kubernetes cluster with end-to-end encryption between components and RBAC authentication.
+Kubics guides you through bootstrapping a highly available Kubernetes cluster with end-to-end encryption between components and RBAC authentication.
 
 * [Kubernetes](https://github.com/kubernetes/kubernetes) 1.17.2
 * [containerd Container Runtime](https://github.com/containerd/containerd) 1.3.2
