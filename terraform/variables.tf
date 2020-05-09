@@ -5,11 +5,11 @@ variable "aws_profile" {
   default = "default"
 }
 variable "ami_type" {
-  # Ubuntu 2020.04 ami
-  default = "ami-0b8cf0f359b1335e1"
+  # Ubuntu bionic 18.04 LTS ami
+  default = "ami-0e763a959ec839f5e"
 }
 variable "instance_type" {
-  default = "t3a.medium	"
+  default = "t3a.small"
 }
 variable "key_name" {
   default = "kubics-master"

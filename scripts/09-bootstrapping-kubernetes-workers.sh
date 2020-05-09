@@ -6,4 +6,4 @@ echo "-- 09. BOOTSTRAP WORKERS"
 DIRECTORY=$(dirname $0)
 $DIRECTORY/00_create_ansible_inventory.sh
 
-ansible-playbook -i kube_full_inventory.yml ../ansible/09-bootstrapping-kubernetes-workers.yml
+ansible-playbook -vvv -i kube_full_inventory.yml ../ansible/09-bootstrapping-kubernetes-workers.yml --private-key=~/.ssh/id_rsa

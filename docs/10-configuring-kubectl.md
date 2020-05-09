@@ -22,7 +22,7 @@ Generate a kubeconfig file suitable for authenticating as the `admin` user:
 KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers --names "kube-loadbalancer"\
  --output text --query 'LoadBalancers[].DNSName' --profile=default --region=ap-southeast-1)
 
-kubectl config set-cluster kubernetes-the-hard-way \
+kubectl config set-cluster kubics\
   --certificate-authority=ca.pem \
   --embed-certs=true \
   --server=https://${KUBERNETES_PUBLIC_ADDRESS}:443
@@ -31,8 +31,8 @@ kubectl config set-credentials admin \
   --client-certificate=admin.pem \
   --client-key=admin-key.pem
 
-kubectl config set-context kubernetes-the-hard-way \
-  --cluster=kubernetes-the-hard-way \
+kubectl config set-context kubics\
+  --cluster=kubics\
   --user=admin
 
 kubectl config use-context kubernetes-the-hard-way

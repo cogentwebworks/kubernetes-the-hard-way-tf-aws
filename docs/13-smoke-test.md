@@ -31,7 +31,7 @@ In this section you will verify the ability to [encrypt secret data at rest](htt
 Create a generic secret:
 
 ```sh
-kubectl create secret generic kubernetes-the-hard-way --from-literal="mykey=mydata"
+kubectl create secret generic kubics--from-literal="mykey=mydata"
 ```
 
 Print a hexdump of the `kubernetes-the-hard-way` secret stored in etcd:
@@ -51,7 +51,7 @@ sudo ETCDCTL_API=3 etcdctl get \
   --cacert=/etc/etcd/ca.pem \
   --cert=/etc/etcd/kubernetes.pem \
   --key=/etc/etcd/kubernetes-key.pem\
-  /registry/secrets/default/kubernetes-the-hard-way | hexdump -C
+  /registry/secrets/default/kubics| hexdump -C
 ```
 
 > output

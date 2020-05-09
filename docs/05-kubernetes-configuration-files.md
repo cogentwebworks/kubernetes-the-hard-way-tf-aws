@@ -40,7 +40,7 @@ PRIVATE_DNS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_w
 for instance in $PRIVATE_DNS; do
   instance=$(echo $instance | cut -d'.' -f1)
   
-  kubectl config set-cluster kubernetes-the-hard-way \
+  kubectl config set-cluster kubics\
     --certificate-authority=ca.pem \
     --embed-certs=true \
     --server=https://${KUBERNETES_PUBLIC_ADDRESS}:443 \
@@ -53,7 +53,7 @@ for instance in $PRIVATE_DNS; do
     --kubeconfig=${instance}.kubeconfig
 
   kubectl config set-context default \
-    --cluster=kubernetes-the-hard-way \
+    --cluster=kubics\
     --user=system:node:${instance} \
     --kubeconfig=${instance}.kubeconfig
 
@@ -74,7 +74,7 @@ Generate a kubeconfig file for the `kube-proxy` service:
 
 ```
 {
-  kubectl config set-cluster kubernetes-the-hard-way \
+  kubectl config set-cluster kubics\
     --certificate-authority=ca.pem \
     --embed-certs=true \
     --server=https://${KUBERNETES_PUBLIC_ADDRESS}:443 \
@@ -87,7 +87,7 @@ Generate a kubeconfig file for the `kube-proxy` service:
     --kubeconfig=kube-proxy.kubeconfig
 
   kubectl config set-context default \
-    --cluster=kubernetes-the-hard-way \
+    --cluster=kubics\
     --user=system:kube-proxy \
     --kubeconfig=kube-proxy.kubeconfig
 
@@ -107,7 +107,7 @@ Generate a kubeconfig file for the `kube-controller-manager` service:
 
 ```
 {
-  kubectl config set-cluster kubernetes-the-hard-way \
+  kubectl config set-cluster kubics\
     --certificate-authority=ca.pem \
     --embed-certs=true \
     --server=https://127.0.0.1:6443 \
@@ -120,7 +120,7 @@ Generate a kubeconfig file for the `kube-controller-manager` service:
     --kubeconfig=kube-controller-manager.kubeconfig
 
   kubectl config set-context default \
-    --cluster=kubernetes-the-hard-way \
+    --cluster=kubics\
     --user=system:kube-controller-manager \
     --kubeconfig=kube-controller-manager.kubeconfig
 
@@ -141,7 +141,7 @@ Generate a kubeconfig file for the `kube-scheduler` service:
 
 ```
 {
-  kubectl config set-cluster kubernetes-the-hard-way \
+  kubectl config set-cluster kubics\
     --certificate-authority=ca.pem \
     --embed-certs=true \
     --server=https://127.0.0.1:6443 \
@@ -154,7 +154,7 @@ Generate a kubeconfig file for the `kube-scheduler` service:
     --kubeconfig=kube-scheduler.kubeconfig
 
   kubectl config set-context default \
-    --cluster=kubernetes-the-hard-way \
+    --cluster=kubics\
     --user=system:kube-scheduler \
     --kubeconfig=kube-scheduler.kubeconfig
 
@@ -174,7 +174,7 @@ Generate a kubeconfig file for the `admin` user:
 
 ```
 {
-  kubectl config set-cluster kubernetes-the-hard-way \
+  kubectl config set-cluster kubics\
     --certificate-authority=ca.pem \
     --embed-certs=true \
     --server=https://127.0.0.1:6443 \
@@ -187,7 +187,7 @@ Generate a kubeconfig file for the `admin` user:
     --kubeconfig=admin.kubeconfig
 
   kubectl config set-context default \
-    --cluster=kubernetes-the-hard-way \
+    --cluster=kubics\
     --user=admin \
     --kubeconfig=admin.kubeconfig
 
