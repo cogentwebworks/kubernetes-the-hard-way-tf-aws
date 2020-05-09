@@ -2,7 +2,7 @@
 
 echo "-- 12. DNS ADDON"
 
-kubectl apply -f https://storage.googleapis.com/kubernetes-the-hard-way/coredns.yaml
+kubectl apply -f https://raw.githubusercontent.com/cogentwebworks/kubernetes-the-hard-way-tf-aws/master/templates/coredns.yaml
 
 sleep 20s
 
