@@ -32,11 +32,11 @@
       dest: /usr/local/bin/
       mode: a+x
     with_items:
-      - "https://raw.githubusercontent.com/cogentwebworks/kubernetes-the-hard-way-tf-aws/master/runsc/runsc"
-      - "https://github.com/opencontainers/runc/releases/download/v1.0.0-rc10/runc.amd64"
-      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubectl"
-      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kube-proxy"
-      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.2/bin/linux/amd64/kubelet"
+      - "https://storage.googleapis.com/gvisor/releases/release/latest/runsc"
+      - "https://github.com/opencontainers/runc/releases/download/v1.0.0-rc90/runc.amd64"
+      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bin/linux/amd64/kubectl"
+      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bin/linux/amd64/kube-proxy"
+      - "https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bin/linux/amd64/kubelet"
     become: yes
 
   - name: 09.4 Rename runc.amd64 to runc
@@ -59,7 +59,7 @@
 
   - name: 09.7 Download and untar cni-plugins
     unarchive:
-      src: "https://github.com/containernetworking/plugins/releases/download/v0.8.5/cni-plugins-linux-amd64-v0.8.5.tgz"
+      src: "https://github.com/containernetworking/plugins/releases/download/v0.8.6/cni-plugins-linux-amd64-v0.8.6.tgz"
       dest: /opt/cni/bin/
       remote_src: yes
     become: yes

@@ -1,14 +1,14 @@
 # About
 
-This guide was created following the awesome [Kubics](https://github.com/kelseyhightower/kubernetes-the-hard-way) by Kelsey Hightower. It's a lot of copy pasting, so all credit to him.
+This guide was created following the awesome [kubernetes-the-hard-way](https://github.com/kelseyhightower/kubernetes-the-hard-way) by Kelsey Hightower. It's a lot of copy pasting, so all credit to him.
 
-I consulted [Prabhat Sharma](https://github.com/prabhatsharma) adaption of [Kubics (AWS)](https://github.com/prabhatsharma/kubernetes-the-hard-way-aws)
+I consulted [Prabhat Sharma](https://github.com/prabhatsharma) adaption of [kubernetes-the-hard-way (AWS)](https://github.com/prabhatsharma/kubernetes-the-hard-way-aws)
 
 This guide also makes use of Terraform to automatically deploy the infrastructure and Ansible to provision it.
 
 There are some shell and asible scripts provided to fully automate the whole process.
 
-# Kubics
+# kubernetes-the-hard-way
 
 This tutorial walks you through setting up Kubics. This guide is not for people looking for a fully automated command to bring up a Kubernetes cluster. If that's you then check out [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine), [AWS Elastic Container Service for Kubernetes](https://aws.amazon.com/eks/) or the [Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/).
 
@@ -22,13 +22,13 @@ The target audience for this tutorial is someone planning to support a productio
 
 ## Cluster Details
 
-Kubics guides you through bootstrapping a highly available Kubernetes cluster with end-to-end encryption between components and RBAC authentication.
+kubernetes-the-hard-way guides you through bootstrapping a highly available Kubernetes cluster with end-to-end encryption between components and RBAC authentication.
 
-* [Kubernetes](https://github.com/kubernetes/kubernetes) 1.18.2
+* [Kubernetes](https://github.com/kubernetes/kubernetes) 1.18.4
 * [containerd Container Runtime](https://github.com/containerd/containerd) 1.3.4
-* [gVisor](https://github.com/google/gvisor) release-20200422.0
-* [CNI Container Networking](https://github.com/containernetworking/cni) 0.8.5
-* [etcd](https://github.com/coreos/etcd) 3.4.7
+* [gVisor](https://github.com/google/gvisor) release-20200601.0
+* [CNI Container Networking](https://github.com/containernetworking/cni) 0.8.6
+* [etcd](https://github.com/coreos/etcd) 3.4.9
 
 ## Labs
 
