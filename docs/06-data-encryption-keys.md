@@ -41,7 +41,7 @@ EOF
 Copy the `encryption-config.yaml` encryption config file to each controller instance:
 
 ```
-PUBLIC_DNS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicDnsName" | jq -r ".[]"))
+PUBLIC_DNS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicDnsName" | jq -r ".[]"))
 
 for instance in $PUBLIC_DNS; do
     scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa encryption-config.yaml ubuntu@${instance}:~/

@@ -3,10 +3,10 @@
 echo "-- 05. GENERATE KUBECONFIG"
 
 KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers --names "kube-loadbalancer"\
- --output text --query 'LoadBalancers[].DNSName' --profile=default --region=ap-southeast-1)
+ --output text --query 'LoadBalancers[].DNSName' --profile=sysops --region=ap-southeast-1)
 
-PRIVATE_DNS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
- "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1\
+PRIVATE_DNS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node"\
+ "Name=instance-state-name,Values=running" --profile=sysops --region=ap-southeast-1\
  | jq -r '.Reservations[].Instances[].PrivateDnsName')
 
 for instance in $PRIVATE_DNS; do

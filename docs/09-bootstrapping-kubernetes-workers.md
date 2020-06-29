@@ -21,7 +21,7 @@ The commands in this lab must be run on each worker instance: worker-0, worker-1
 
 ```
 {
-PUBLIC_WORKER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
+PUBLIC_WORKER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
 
 for external_ip in $PUBLIC_WORKER_IPS; do
   echo ssh ubuntu@$external_ip
@@ -37,19 +37,19 @@ First create the inventory file by running:
 
 ```
 {
-PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
+PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress")
 
-PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
+PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PrivateIpAddress")
 
-PUBLIC_DNS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
+PUBLIC_DNS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicDnsName")
 
-PUBLIC_WORKER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
+PUBLIC_WORKER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
 

@@ -71,7 +71,7 @@ cfssl gencert \
 
 # Worker Certificates
 
-AWS_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
+AWS_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node" "Name=instance-state-name,Values=running" --profile=sysops --region=ap-southeast-1)
 INSTANCE_IDS=$(echo $AWS_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId') 
 
 for instance in $INSTANCE_IDS; do

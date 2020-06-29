@@ -4,8 +4,8 @@ echo "-- 04. DISTRIBUTE CERTIFICATES"
 
 # Workers
 
-AWS_WORKER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
- "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
+AWS_WORKER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node"\
+ "Name=instance-state-name,Values=running" --profile=sysops --region=ap-southeast-1)
 INSTANCE_IDS=$(echo $AWS_WORKER_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId') 
 
 for instance in $INSTANCE_IDS; do
@@ -20,8 +20,8 @@ done
 
 # Controllers
 
-AWS_CONTROLLER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
+AWS_CONTROLLER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
+ "Name=instance-state-name,Values=running" --profile=sysops --region=ap-southeast-1)
 INSTANCE_IDS=$(echo $AWS_CONTROLLER_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId')
 
 for instance in $INSTANCE_IDS; do

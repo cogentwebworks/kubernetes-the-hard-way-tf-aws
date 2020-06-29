@@ -18,8 +18,8 @@ resources:
       - identity: {}
 EOF
 
-PUBLIC_DNS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
- "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1\
+PUBLIC_DNS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
+ "Name=instance-state-name,Values=running" --profile=sysops --region=ap-southeast-1\
   --query "Reservations[].Instances[].PublicDnsName" | jq -r ".[]")
 
 for instance in $PUBLIC_DNS; do

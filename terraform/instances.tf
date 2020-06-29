@@ -2,13 +2,13 @@
 resource "aws_instance" "kube_controller" {
   count = length(aws_subnet.kube_public_subnet)
 
-  instance_type = var.instance_type
+  instance_type = var.instance_optimize_type
   ami           = var.ami_type
 
   tags = {
-    Name = "kube_controller_${count.index}_instance"
+    Name = "kube-controller-${count.index}-node"
   }
-  user_data              = "name=controller-${count.index}"
+  user_data              = "name=Controller-${count.index}"
   key_name               = aws_key_pair.kube_auth.id
   vpc_security_group_ids = [aws_security_group.kube_web_open_sg.id]
   subnet_id              = aws_subnet.kube_public_subnet[count.index].id
@@ -21,11 +21,11 @@ resource "aws_instance" "kube_worker" {
   ami           = var.ami_type
 
   tags = {
-    Name     = "kube_worker_${count.index}_instance"
+    Name     = "kube-worker-${count.index}-node"
     Pod_Cidr = "10.200.${count.index}.0/24"
   }
 
-  user_data = "name=worker-${count.index}|pod-cidr=10.200.${count.index}.0/24"
+  user_data = "name=Worker-${count.index}|pod-cidr=10.200.${count.index}.0/24"
 
   key_name               = aws_key_pair.kube_auth.id
   vpc_security_group_ids = [aws_security_group.kube_web_open_sg.id]

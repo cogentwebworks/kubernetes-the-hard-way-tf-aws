@@ -140,7 +140,7 @@ You have a script file you can run under [/scripts/04_generate_worker_cets.sh](.
 
 ```
 {
-AWS_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
+AWS_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 INSTANCE_IDS=($(echo $AWS_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId')) 
 
 for instance in $INSTANCE_IDS; do
@@ -315,7 +315,7 @@ Generate the Kubernetes API Server certificate and private key:
 ```
 {
 
-AWS_MASTER_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
+AWS_MASTER_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 MASTER_PRIVATE_IP_LIST=$(echo $AWS_MASTER_RESULT | jq -r '.Reservations | map(.Instances[].PrivateIpAddress) | join(",")')
 MASTER_PRIVATE_DNS_LIST=$(echo $AWS_MASTER_RESULT | jq -r '.Reservations | map(.Instances[].PrivateDnsName) | join(",")')
@@ -406,7 +406,7 @@ You can also use the provided [script](../scripts/04_distribute_certificate_file
 
 ```
 {
-  AWS_WORKER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
+  AWS_WORKER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 INSTANCE_IDS=($(echo $AWS_WORKER_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId'))
 
 for instance in $INSTANCE_IDS; do
@@ -426,7 +426,7 @@ Copy the appropriate certificates and private keys to each controller instance:
 ```
 {
 
-AWS_CONTROLLER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
+AWS_CONTROLLER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 INSTANCE_IDS=($(echo $AWS_CONTROLLER_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId'))
 
 for instance in $INSTANCE_IDS; do

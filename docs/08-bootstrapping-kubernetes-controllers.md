@@ -20,7 +20,7 @@ The commands in this lab must be run on each controller instance: `controller-0`
 
 ```
 {
-PUBLIC_CONTROLLER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
+PUBLIC_CONTROLLER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]"))
 
 for external_ip in $PUBLIC_CONTROLLER_IPS; do
   echo ssh -i kubernetes.id_rsa ubuntu@$external_ip
@@ -36,19 +36,19 @@ First create the inventory file in case you don't have it by running:
 
 ```
 {
-PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
+PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress")
 
-PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
+PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PrivateIpAddress")
 
-PRIVATE_DNS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance"\
+PRIVATE_DNS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PrivateDnsName")
 
-PUBLIC_WORKER_IPS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
+PUBLIC_WORKER_IPS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query\
  "Reservations[].Instances[].PublicIpAddress" | jq -r ".[]")
 
@@ -215,9 +215,9 @@ INTERNAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 And get the ECTD_CLUSTER_SETTING from the snippet at the start of the file running this on your local machine:
 ```
 {
-PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress")
+PUBLIC_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicIpAddress")
 
-PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PrivateIpAddress")
+PRIVATE_CONTROLLER_IPS_RAW=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PrivateIpAddress")
 
 ETCD_CLUSTER_SETTING=""
 declare -i i=0

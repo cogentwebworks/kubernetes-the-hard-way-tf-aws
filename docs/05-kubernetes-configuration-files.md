@@ -33,7 +33,7 @@ Generate a kubeconfig file for each worker node:
 
 ```
 {
-PRIVATE_DNS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
+PRIVATE_DNS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1\
  | jq -r '.Reservations[].Instances[].PrivateDnsName'))
 
@@ -210,7 +210,7 @@ Copy the appropriate `kubelet` and `kube-proxy` kubeconfig files to each worker 
 
 ```
 {
-AWS_WORKER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_worker_*_instance"\
+AWS_WORKER_CLI_RESULT=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-worker-*-node"\
  "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1)
 INSTANCE_IDS=($(echo $AWS_WORKER_CLI_RESULT | jq -r '.Reservations[].Instances[].InstanceId'))
 
@@ -229,7 +229,7 @@ Copy the appropriate `kube-controller-manager` and `kube-scheduler` kubeconfig f
 
 ```
 {
-PUBLIC_DNS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube_controller_*_instance" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicDnsName" | jq -r ".[]"))
+PUBLIC_DNS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=kube-controller-*-node" "Name=instance-state-name,Values=running" --profile=default --region=ap-southeast-1 --query "Reservations[].Instances[].PublicDnsName" | jq -r ".[]"))
 
 for instance in $PUBLIC_DNS; do
     scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa admin.kubeconfig kube-controller-manager.kubeconfig\
